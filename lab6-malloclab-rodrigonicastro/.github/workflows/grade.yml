@@ -1,0 +1,39 @@
+name: grade
+on: [push]
+jobs:
+  run-using-github:
+    if : github.repository_owner == 'cu-csci-2400-computer-systems'
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: specify python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.7'
+      - name: Run all tests
+        run: make tests
+      - name: Run grade
+        run: make grade
+
+  grading-for-student:
+    if : github.repository_owner != 'cu-csci-2400-computer-systems'
+    runs-on: [self-hosted, ubuntu-22.04]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install needed Ubuntu Packages 
+        run: sudo apt-get update && sudo apt-get install -y build-essential perl python3
+      - name: Prepare to build
+        run: make clean
+      - name: Build...
+        run: make
+      - name: Run grading evaluation 1
+        run: python3 ./grade-malloc.py
+      - name: Run grading evaluation 2
+        run: python3 ./grade-malloc.py
+      - name: Prepare grading artifact
+        run: python3 ./grade-malloc.py > grading-output.txt
+      - name: Copy grade artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: grading-output.txt
+          path: ./grading-output.txt

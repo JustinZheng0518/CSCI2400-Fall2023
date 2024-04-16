@@ -1,0 +1,32 @@
+name: grade
+on: [push]
+jobs:
+  run-using-github:
+# see https://docs.github.com/en/actions/learn-github-actions/contexts#github-context for defined variables
+    if: github.repository_owner == 'cu-csci-2400-computer-systems'
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: No target to run in in class repo
+        run: echo No target to run in class repo
+
+  grading-for-student:
+    if: github.repository_owner != 'cu-csci-2400-computer-systems'
+    runs-on: [self-hosted, ubuntu-22.04]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install needed Ubuntu Packages 
+        run: sudo apt-get update && sudo apt-get install -y make
+      - name: Check that you have a target file
+        run: test -d target*
+      - name: Check level 1 of ctarget
+        run: make grade-ctarget.l1.txt
+      - name: Check level 2 of ctarget
+        run: make grade-ctarget.l2.txt
+      - name: Check level 3 of ctarget
+        run: make grade-ctarget.l3.txt
+
+      - name: Check level 2 of ROP rtarget
+        run: make grade-rtarget.l2.txt
+      - name: Check level 3 of ROP rtarget
+        run: make grade-rtarget.l3.txt

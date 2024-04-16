@@ -1,0 +1,16 @@
+#
+# ignore core files
+##
+**core.*
+##./**core.*
+##
+## and local .o
+##
+*.o
+##
+## Lab specific
+##
+btest
+fshow
+ishow
+**/.ipynb_checkpoints

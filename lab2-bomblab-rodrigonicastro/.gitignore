@@ -1,0 +1,14 @@
+#
+# ignore core files
+##
+**core.*
+##./**core.*
+##
+## and local .o
+##
+*.o
+##
+## Lab specific
+##
+bomb.tar
+**/.ipynb_checkpoints

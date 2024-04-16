@@ -1,0 +1,29 @@
+name: grade
+on: [push]
+jobs:
+  github-runner-scoring-run:
+    if: github.repository_owner == 'cu-csci-2400-computer-systems'
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: No target to run in in class repo
+        run: echo No target to run in class repo
+
+  grading-for-student:
+    if: github.repository_owner != 'cu-csci-2400-computer-systems'
+    runs-on: [self-hosted, ubuntu-22.04]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install needed Ubuntu Packages 
+        run: sudo apt-get update && sudo apt-get install -y build-essential make
+      - name: Dump the contents of /proc/cpuinfo which describes cache organization
+        run: cat /proc/cpuinfo
+      - name: Build the filter binary
+        run: make filter
+      - name: Check that the solution is correct
+        run: make test
+      - name: First grading run to warm up the caches
+        run: ./Judge
+      - name: Second grading run for actual scoring
+        run: ./Judge
+

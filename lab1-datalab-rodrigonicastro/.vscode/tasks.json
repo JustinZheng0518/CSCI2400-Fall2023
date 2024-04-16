@@ -1,0 +1,75 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558 
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Step 1: Test Coding",
+            "command": "make",
+            "args": ["test-coding"],
+            "problemMatcher": "$gcc",
+        },
+        {
+            "type": "shell",
+            "label": "Step 2: Test Correctness",
+            "command": "make",
+            "args": ["test-correctness"],
+            "problemMatcher": "$gcc",
+        },
+        {
+            "type": "shell",
+            "label": "Step 3: Test for Legal Operations",
+            "command": "make",
+            "args": ["test-ops"],
+            "problemMatcher": "$gcc",
+        },
+        {
+            "type": "shell",
+            "label": "Step 4: Test score",
+            "command": "make",
+            "args": ["test-score"],
+            "problemMatcher": "$gcc",
+        },
+        {
+            "type": "shell",
+            "label": "Step 5: Test number of operations",
+            "command": "make",
+            "args": ["test-count"],
+            "problemMatcher": "$gcc",
+        },
+        {
+            "type": "shell",
+            "label": "Run Grading Script",
+            "command": "make",
+            "args": ["grade"],
+            "problemMatcher": "$gcc",
+        },
+        {
+            "type": "shell",
+            "label": "build btest",
+            "command": "make",
+            "args": ["btest"],
+            "problemMatcher": "$gcc",
+            "group": {
+                "kind" : "build",
+                "isDefault" : true
+            },
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        },
+        {
+            "label": "Run make clean on folder",
+            "type": "shell",
+            "command": "make",
+            "args": [ "clean"],
+            "problemMatcher" : [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            }
+        }
+    ]
+}

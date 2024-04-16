@@ -1,0 +1,29 @@
+name: grade
+on: [push, workflow_dispatch]
+jobs:
+  run-using-github:
+# see https://docs.github.com/en/actions/learn-github-actions/contexts#github-context for defined variables
+    if: github.repository_owner == 'cu-csci-2400-computer-systems'
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Just run all problems 
+        run: perl driver.pl
+      - name: Check that the first 4 problems are correct
+        run: perl driver.pl -g 4
+
+  grading-for-student:
+    if: github.repository_owner != 'cu-csci-2400-computer-systems'
+    runs-on: [self-hosted, ubuntu-22.04]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install needed Ubuntu Packages 
+        run: sudo apt-get update && sudo apt-get install -y build-essential perl
+      - name: Run all problems 
+        run: perl driver.pl
+      - name: Check that the first 4 problems are correct
+        run: perl driver.pl -g 4
+      - name: Check that the first 11 problems are correct
+        run: perl driver.pl -g 11
+      - name: Check that the extra credit problems are correct
+        run: perl driver.pl -g 13
